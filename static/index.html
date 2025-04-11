@@ -6,6 +6,8 @@
     <title>JXUFE.ICU社区介绍</title>
     <!-- 添加 Font Awesome 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 添加 AOS 动画库 -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* 基础样式重置 */
@@ -14,7 +16,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #6a11cb 0%, #ff5895 100%);
@@ -25,7 +27,7 @@
             letter-spacing: 0.02em;
             overflow-x: hidden;
         }
-        
+
         /* 导航栏样式 */
         .navbar {
             background-color: #000;
@@ -38,126 +40,129 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
-        
+
         .navbar-brand {
             display: flex;
             align-items: center;
             text-decoration: none;
         }
-        
+
         .navbar-brand img {
             height: 30px;
             margin-right: 10px;
         }
-        
+
         .navbar-brand h1 {
             color: #fff;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             font-weight: 600;
         }
-        
+
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: clamp(15px, 3vw, 25px);
         }
-        
+
         .nav-links a {
             color: #fff;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
             font-weight: 500;
             transition: color 0.3s, transform 0.3s;
             position: relative;
         }
-        
+
         .nav-links a:hover {
             color: #f0a04d;
             transform: translateY(-2px);
         }
-        
+
         .nav-links a::after {
             content: '';
             position: absolute;
-            width: 0;
+            width: 100%;
             height: 2px;
             bottom: -5px;
             left: 0;
             background-color: #f0a04d;
-            transition: width 0.3s;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease-out;
         }
-        
+
         .nav-links a:hover::after {
-            width: 100%;
+            transform: scaleX(1);
         }
-        
+
         /* 主要内容区域 */
         .container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
-            animation: fadeIn 1s ease-in;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+
         .slogan {
             color: white;
             position: relative;
-            padding: 15px 25px;
-            margin: 30px 0;
+            padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 25px);
+            margin: 30px auto;
+            max-width: 90%;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            text-align: center;
         }
-        
+
         .slogan:hover {
             transform: translateX(10px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .section-title {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             font-weight: 700;
             color: #fff;
             margin-bottom: 30px;
             text-align: center;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        
+
         /* 卡片网格 */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(15px, 3vw, 25px);
+            justify-items: center;
+            padding: 0 10px;
         }
-        
+
         .card {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(12px);
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        box-shadow 0.5s;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        box-shadow 0.5s ease, background 0.3s ease;
             cursor: pointer;
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.18);
             text-decoration: none;
+            width: 100%;
+            max-width: 350px;
         }
-        
+
         .card:hover {
             transform: translateY(-10px) rotateZ(1deg) scale(1.02);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             background: rgba(255, 255, 255, 0.25);
         }
-        
-        /* 卡片内光效动画 */
+
         .card::before {
             content: '';
             position: absolute;
@@ -177,135 +182,141 @@
             pointer-events: none;
             z-index: 2;
         }
-        
+
         .card:hover::before {
             opacity: 1;
             transform: rotate(30deg) translate(50%, -100%);
         }
-        
+
         .card-image {
             width: 100%;
             height: 180px;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s;
+            transition: transform 0.5s ease;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .card:hover .card-image {
             transform: scale(1.05);
         }
-        
+
         .card-content {
-            padding: 20px;
+            padding: clamp(15px, 2vw, 20px);
         }
-        
+
         .meta-info {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 12px;
-            font-size: 0.85rem;
+            font-size: clamp(0.8rem, 1.5vw, 0.85rem);
         }
-        
+
         .source {
             display: flex;
             align-items: center;
             color: #fff;
         }
-        
+
         .source img {
             width: 16px;
             height: 16px;
             margin-right: 6px;
             border-radius: 50%;
+            object-fit: cover;
         }
-        
+
         .date {
             color: #f0a04d;
             font-weight: 500;
         }
-        
+
         .card-title {
             margin: 0;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             font-weight: 600;
             color: #fff;
             line-height: 1.4;
-            transition: color 0.3s;
+            transition: color 0.3s ease;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        
+
         .card:hover .card-title {
             color: #f0f0f0;
         }
-        
-        /* 响应式设计 */
-        @media (max-width: 1024px) {
-            .grid-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
+
+        /* 分类导航栏样式 */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: clamp(10px, 2vw, 20px);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
-        
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
+
+        .category-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease, transform 0.3s ease;
         }
-        
-        @media (max-width: 480px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .navbar {
-                flex-direction: column;
-                padding: 15px;
-            }
-            
-            .nav-links {
-                margin-top: 15px;
-                gap: 15px;
-            }
+
+        .category-nav a:hover,
+        .category-nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
         }
-        
+
+        /* 隐藏不显示的卡片 */
+        .card-hidden {
+            display: none;
+        }
+
         /* 页脚区域 */
         .footer {
             background-color: rgba(0, 0, 0, 0.8);
             color: #fff;
-            padding: 30px 0;
+            padding: clamp(20px, 5vw, 30px) 0;
             margin-top: 60px;
             text-align: center;
         }
-        
+
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: clamp(15px, 3vw, 20px);
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
-        
+
         .footer-links a {
             color: #fff;
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            transition: color 0.3s ease, transform 0.3s ease;
         }
-        
+
         .footer-links a:hover {
             color: #f0a04d;
+            transform: scale(1.05);
         }
-        
+
         .copyright {
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
             color: #aaa;
         }
-        
+
         /* 返回顶部按钮 */
         .back-to-top {
             position: fixed;
@@ -321,48 +332,48 @@
             justify-content: center;
             cursor: pointer;
             opacity: 0;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
         }
-        
+
         .back-to-top.show {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .back-to-top:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.1);
         }
-        
+
         /* 友情链接样式 */
         .friend-links-section {
-            padding: 2rem 0;
+            padding: clamp(1.5rem, 3vw, 2rem) 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 1.5rem;
         }
-        
+
         .friend-links-title {
             color: #fff;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
-        
+
         .friend-links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
             max-width: 1000px;
             margin: 0 auto;
         }
-        
+
         .friend-link {
             display: flex;
             flex-direction: column;
@@ -373,23 +384,94 @@
             transition: all 0.3s ease;
             text-decoration: none;
         }
-        
+
         .friend-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .friend-logo {
-            width: 120px;
+            width: clamp(100px, 20vw, 120px);
             height: 40px;
             object-fit: contain;
             margin-bottom: 0.5rem;
         }
-        
+
         .friend-name {
             color: #f0a04d;
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
             text-align: center;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+            }
+
+            .slogan {
+                font-size: 1.1rem;
+                padding: 10px 15px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .navbar {
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .slogan {
+                font-size: 1rem;
+                padding: 8px 12px;
+                margin: 20px auto;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+
+            .category-nav {
+                gap: 10px;
+            }
+
+            .category-nav a {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+
+            .friend-links-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
         }
     </style>
 </head>
@@ -400,32 +482,40 @@
             <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/278486/30/18092/418592/67f6a8c3Fd38fb810/284e2c63945de096.png" alt="Logo">
             <h1>JXUFE.ICU社区</h1>
         </a>
-        
+
         <div class="nav-links">
             <a href="https://www.discourse.org/" target="_blank"><i class="fab fa-discourse"></i> Discourse</a>
-            <a href="https://misskey-hub.net/cn/" target="_blank"><i class="fab fa-mastodon"></i> Misskey</a>
+            <a href="https://misskey-hub.net/cn/docs/install/docker/" target="_blank"><i class="fab fa-mastodon"></i> Misskey</a>
             <a href="https://status.jxufe.icu/status/jxufe-icu" target="_blank"><i class="fa fa-bullseye"></i> Status</a>
             <a href="https://linux.do/u/user695/summary/" target="_blank"><i class="fa fa-user"></i> About</a>
-            <a href="mailto:jaychou070220@outlook.com">
-                <i class="fa fa-envelope"></i> Contact
-            </a>
+            <a href="mailto:jaychou070220@outlook.com"><i class="fa fa-envelope"></i> Contact</a>
         </div>
     </nav>
 
     <!-- 主要内容区域 -->
     <div class="container">
-        <h3 class="slogan">
+        <h3 class="slogan" data-aos="fade-up">
             <i class="fas fa-eye"></i> 这是一个使用了生成式人工智能(Claude3.7、DeepSeek R1、grok3)和人工的网页
             <br>
             <i class="fas fa-exclamation-triangle"></i> 免责声明：理性讨论，风险自担，遵守法律，尊重版权
             <br>
             <i class="fas fa-heart"></i> 致力于：打造中文技术区的净土之一，一个可以安居一隅的小天地，一个“共产共用”的理想线上社区
         </h3>
-        <h2 class="section-title">社区内容速览</h2>
-        
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">社区内容速览</h2>
+
+        <!-- 分类导航栏 -->
+        <div class="category-nav" data-aos="fade-up" data-aos-delay="200">
+            <a href="#" data-category="all" class="active">全部</a>
+            <a href="#" data-category="community">社区服务</a>
+            <a href="#" data-category="discourse">Discourse</a>
+            <a href="#" data-category="misskey">Misskey</a>
+            <a href="#" data-category="docker">Docker</a>
+            <a href="#" data-category="resource">资源服务</a>
+        </div>
+
         <div class="grid-container">
             <!-- 第一行 -->
-            <a href="https://jxufe.icu/" target="_blank" class="card">
+            <a href="https://jxufe.icu/" target="_blank" class="card" data-category="discourse community" data-aos="fade-up" data-aos-delay="100">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/275881/11/17302/549175/67f6b3e7F18024fbc/4428c979dc1b2bab.png" alt="JXUFE.ICU" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -437,8 +527,8 @@
                     <h3 class="card-title"><i class="fab fa-discourse"></i> 通过链接加入Discourse</h3>
                 </div>
             </a>
-            
-            <a href="https://misskey.jxufe.icu/" target="_blank" class="card">
+
+            <a href="https://misskey.jxufe.icu/" target="_blank" class="card" data-category="misskey community" data-aos="fade-up" data-aos-delay="200">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/276302/30/18353/250812/67f6b2ccF1abf9393/285b9dcf6f75981c.png" alt="Misskey" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -450,8 +540,8 @@
                     <h3 class="card-title"><i class="fab fa-mastodon"></i> 通过邀请码加入Misskey</h3>
                 </div>
             </a>
-            
-            <a href="https://jxufe.icu/t/topic/4/" target="_blank" class="card">
+
+            <a href="https://jxufe.icu/t/topic/4/" target="_blank" class="card" data-category="discourse community" data-aos="fade-up" data-aos-delay="300">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/273357/33/16598/175830/67f6b0d7Ff552370b/f71100478281289a.png" alt="JXUFE.ICU" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -463,8 +553,8 @@
                     <h3 class="card-title"><i class="fab fa-discourse"></i> 了解社区&规则</h3>
                 </div>
             </a>
-            
-            <a href="https://jxufe.icu/t/topic/5/" target="_blank" class="card">
+
+            <a href="https://jxufe.icu/t/topic/5/" target="_blank" class="card" data-category="discourse community" data-aos="fade-up" data-aos-delay="400">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/271550/28/17500/288696/67f6b0a0Ff9bc25ef/005265f1a9aca7bf.png" alt="JXUFE.ICU" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -476,9 +566,9 @@
                     <h3 class="card-title"><i class="fab fa-discourse"></i> 如何使用社区</h3>
                 </div>
             </a>
-            
+
             <!-- 第二行 -->
-            <a href="https://status.jxufe.icu/status/jxufe-icu" target="_blank" class="card">
+            <a href="https://status.jxufe.icu/status/jxufe-icu" target="_blank" class="card" data-category="community" data-aos="fade-up" data-aos-delay="100">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/271689/28/17939/385147/67f6b1adFf7471d47/dce774fd8ce4bc16.png" alt="UptimeKuma" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -487,11 +577,11 @@
                             <span>JXUFE.ICU配套服务监控</span>
                         </div>
                     </div>
-                    <h3 class="card-title"><i class="fab fa-watchman-monitoring"></i> 社区相关设施监控</h3>
+                    <h3 class="card-title"><i class="fas fa-bullseye"></i> 社区相关设施监控</h3>
                 </div>
             </a>
-            
-            <a href="https://docker.jxufe.icu/" target="_blank" class="card">
+
+            <a href="https://docker.jxufe.icu/" target="_blank" class="card" data-category="docker community" data-aos="fade-up" data-aos-delay="200">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/276372/15/18420/490111/67f6b4aeFaef8a743/d32be94cb82f1c81.png" alt="Docker" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -503,8 +593,8 @@
                     <h3 class="card-title"><i class="fab fa-docker"></i><i class="fab fa-cloudflare"></i> Cloudflare Workers托管docker代理</h3>
                 </div>
             </a>
-            
-            <a href="https://zbooks.jxufe.icu/" target="_blank" class="card">
+
+            <a href="https://zbooks.jxufe.icu/" target="_blank" class="card" data-category="resource community" data-aos="fade-up" data-aos-delay="300">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/284795/19/17401/3200320/67f72bc4Fcc8053de/bd54b6a4b674a7a9.png" alt="Zlibrary" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -516,8 +606,8 @@
                     <h3 class="card-title"><i class="fa fa-book"></i> Deno代理Zlibrary镜像</h3>
                 </div>
             </a>
-            
-            <a href="https://reddit.kipjay.org/" target="_blank" class="card">
+
+            <a href="https://reddit.kipjay.org/" target="_blank" class="card" data-category="resource community" data-aos="fade-up" data-aos-delay="400">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/281378/14/17298/147691/67f72ce2Ffaae79c7/9a36203a7a7a9826.png" alt="redlib" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -529,8 +619,8 @@
                     <h3 class="card-title"><i class="fab fa-reddit"></i> VPS反向代理Reddit</h3>
                 </div>
             </a>
-            
-            <a href="https://lemmy.kipjay.org/" target="_blank" class="card">
+
+            <a href="https://lemmy.kipjay.org/" target="_blank" class="card" data-category="resource community" data-aos="fade-up" data-aos-delay="100">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/283924/21/16973/345061/67f79d65Fd4b168a9/3b9114e181b693a6.png" alt="Lemmy" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -542,8 +632,8 @@
                     <h3 class="card-title"><i class="fa fa-mouse"></i> VPS反向代理Reddit</h3>
                 </div>
             </a>
-            
-            <a href="https://neko.jxufe.icu/" target="_blank" class="card">
+
+            <a href="https://neko.jxufe.icu/" target="_blank" class="card" data-category="docker community" data-aos="fade-up" data-aos-delay="200">
                 <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/285183/26/17158/88227/67f7a396F39f7c2bc/68032e0d42151451.png" alt="Neko" class="card-image">
                 <div class="card-content">
                     <div class="meta-info">
@@ -564,81 +654,67 @@
     </div>
 
     <!-- 页脚 -->
-    <footer class="footer">
+    <footer class="footer" data-aos="fade-up">
         <div class="footer-content">
             <!-- 友情链接部分 -->
             <div class="friend-links-section">
-                <h4 class="friend-links-title"><i class="fas fa-handshake"></i> 友情链接</h4>
-                <div class="friend-links-grid">
-                    <a href="https://npiter.tech/" target="_blank" class="friend-link">
-                        <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/270444/22/19199/79495/67f7a01aFfb7db06d/2cbaa0b038feac4b.png" alt="Piter的小窝" class="friend-logo">
-                        <span class="friend-name">Piter的小窝</span>
-                    </a>
-                    <a href="https://linux.do/" target="_blank" class="friend-link">
-                        <img src="https://cdn.ldstatic.com/original/3X/9/d/9dd49731091ce8656e94433a26a3ef36062b3994.png" alt="LINUX DO" class="friend-logo">
-                        <span class="friend-name">LINUX DO</span>
-                    </a>
-                </div>
-            </div>
-            <!-- 特别感谢链接部分 -->
-            <div class="friend-links-section">
                 <h4 class="friend-links-title"><i class="fas fa-heart"></i> 特别感谢</h4>
                 <div class="friend-links-grid">
-                    <a href="https://deno.com/" target="_blank" class="friend-link">
+                    <a href="https://deno.com/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="100">
                         <img src="https://dash.deno.com/assets/logo.svg" alt="deno" class="friend-logo">
                         <span class="friend-name">deno</span>
                     </a>
-                    <a href="https://cloudflare.com/" target="_blank" class="friend-link">
+                    <a href="https://cloudflare.com/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="200">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/284203/16/17551/7497/67f7e38cF2b32a3c7/9ad8bc5079ed99d6.png" alt="Cloudflare" class="friend-logo">
                         <span class="friend-name">Cloudflare</span>
                     </a>
-                    <a href="https://hub.docker.com/" target="_blank" class="friend-link">
+                    <a href="https://hub.docker.com/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="300">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/277086/35/19001/1292/67f7e37bF58fff96a/1e6f5f7064d0b8c2.webp" alt="docker" class="friend-logo">
                         <span class="friend-name">Docker Hub</span>
                     </a>
-                    <a href="https://github.com/" target="_blank" class="friend-link">
-                        <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/272713/21/18460/11351/67f7e36aFc4a18abd/24295095d8da33f9.png" alt="github" class="friend-logo">
+                    <a href="https://github.com/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="400">
+                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github" class="friend-logo">
                         <span class="friend-name">Github</span>
                     </a>
-                    <a href="https://x.com/Linus__Torvalds" target="_blank" class="friend-link">
+                    <a href="https://www.kernel.org/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="100">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/282556/9/17648/15371/67f7df7aF8dbe74cb/08bcfe428ae27416.jpg" alt="linus torvalds" class="friend-logo">
                         <span class="friend-name">Linus_Torvalds</span>
                     </a>
-                    <a href="https://discourse.org/" target="_blank" class="friend-link">
+                    <a href="https://discourse.org/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="200">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/226602/12/30346/7482/67f7e35aFab7e29f2/72205ff7e39c05d5.webp" alt="discourse" class="friend-logo">
                         <span class="friend-name">Discourse</span>
                     </a>
-                    <a href="https://misskey-hub.net/cn/docs/donate/" target="_blank" class="friend-link">
+                    <a href="https://misskey-hub.net/cn/docs/donate/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="300">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/270572/40/19091/2460/67f7e34aFc920c6fc/e1233ce10f49cf92.webp" alt="misskey" class="friend-logo">
                         <span class="friend-name">Misskey</span>
                     </a>
-                    <a href="https://deepseek.com/" target="_blank" class="friend-link">
+                    <a href="https://deepseek.com/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="400">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/224643/15/32288/8803/67f7e337Fa47a563e/ceb5ab837d050964.png" alt="deepseek" class="friend-logo">
                         <span class="friend-name">DeepSeek</span>
                     </a>
-                    <a href="https://chat.qwen.ai" target="_blank" class="friend-link">
+                    <a href="https://chat.qwen.ai" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="100">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/89934/3/55420/44510/67f7e325Faa0ad049/722edec013228e23.png" alt="qwen" class="friend-logo">
                         <span class="friend-name">Qwen</span>
                     </a>
-                    <a href="https://claude.ai/" target="_blank" class="friend-link">
+                    <a href="https://claude.ai/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="200">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/284136/40/17367/3948/67f7e2d9Fff58b2e2/7b300bf4fd4b332d.webp" alt="claude" class="friend-logo">
                         <span class="friend-name">Claude</span>
                     </a>
-                    <a href="https://gemini.google.com/" target="_blank" class="friend-link">
+                    <a href="https://gemini.google.com/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="300">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/272859/35/19037/4046/67f7e2c6Faab1c29c/540dd41a1c0f567b.webp" alt="gemini" class="friend-logo">
                         <span class="friend-name">Gemini</span>
                     </a>
-                    <a href="https://x.ai/" target="_blank" class="friend-link">
+                    <a href="https://x.ai/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="400">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/275701/33/18495/8096/67f7e2b2F7e57c852/509357f86912bbb1.jpg" alt="grok" class="friend-logo">
                         <span class="friend-name">Grok</span>
                     </a>
-                    <a href="https://www.instagram.com/jaychou/" target="_blank" class="friend-link">
+                    <a href="https://www.instagram.com/jaychou/" target="_blank" class="friend-link" data-aos="fade-up" data-aos-delay="100">
                         <img src="https://img20.360buyimg.com/openfeedback/jfs/t1/270886/22/19346/18090/67f7e2a4Fa0c8f28e/1e7181142117797d.webp" alt="jaychou" class="friend-logo">
                         <span class="friend-name">JayChou</span>
                     </a>
                 </div>
             </div>
-            
+
             <div class="footer-links">
                 <a href="/static/privacy.html">隐私政策</a>
                 <a href="/static/terms.html">服务条款</a>
@@ -650,7 +726,16 @@
         </div>
     </footer>
 
+    <!-- AOS 脚本 -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // 初始化 AOS
+        AOS.init({
+            duration: 1000,
+            offset: 120,
+            once: true
+        });
+
         // 返回顶部按钮显示逻辑
         window.addEventListener('scroll', () => {
             const btn = document.querySelector('.back-to-top');
@@ -659,6 +744,35 @@
             } else {
                 btn.classList.remove('show');
             }
+        });
+
+        // 分类导航栏点击事件
+        const categoryNavLinks = document.querySelectorAll('.category-nav a');
+        const cards = document.querySelectorAll('.card');
+
+        categoryNavLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                // 移除所有链接的 active 类
+                categoryNavLinks.forEach(link => link.classList.remove('active'));
+
+                // 为当前点击的链接添加 active 类
+                link.classList.add('active');
+
+                // 获取当前点击的分类
+                const category = link.dataset.category;
+
+                // 遍历所有卡片，根据分类显示/隐藏
+                cards.forEach(card => {
+                    const cardCategories = card.dataset.category.split(' ');
+                    if (category === 'all' || cardCategories.includes(category)) {
+                        card.classList.remove('card-hidden');
+                    } else {
+                        card.classList.add('card-hidden');
+                    }
+                });
+            });
         });
     </script>
 </body>
